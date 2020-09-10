@@ -1,0 +1,92 @@
+<div class="container p-3">
+  <div class="row">
+
+    <div class="col-6">
+      <form [formGroup]="productForm" (submit)="submit()">
+        <div class="card">
+          <div class="card-header">Order Details</div>
+          <div class="card-body" formArrayName="products">
+            <div class="row">
+              <div class="col-12" *ngFor="let product of productFormGroup.controls; let i = index;">
+                <div [formGroupName]="i" class="row">
+                    <div class="form-group col-12">
+                      <label>Product</label>
+                      <select class="form-control" formControlName="product_name" type="text">
+                        <option value="TV">TV</option>
+                        <option value="Mobile">Mobile</option>
+                        <option value="Refrigerator">Refrigerator</option>
+                        <option value="Washing Machine">Washing Machine</option>
+                        <option value="AC">AC</option>
+                      </select>
+                      <span class="text-danger" *ngIf="productFormGroup.controls[i].get('product_name').touched && productFormGroup.controls[i].get('product_name').errors?.required">
+                        Product is required! </span>
+                    </div>
+                    <div class="form-group col-6">
+                      <label>Quantity</label><h6>(Accept upto 3 digit value. For example: 100)</h6>
+                      <input class="form-control" formControlName="quantity" type="text">
+                      <span class="text-danger" *ngIf="productFormGroup.controls[i].get('quantity').touched && productFormGroup.controls[i].get('quantity').errors?.required">
+                        Quantity is required! </span>
+                      <span class="text-danger" *ngIf="productFormGroup.controls[i].get('quantity').errors?.pattern">
+                        Quantity is invalid! </span>
+                    </div>
+
+                    <div class="form-group col-6">
+                      <label>Rate</label><h6>(Accept upto 2 digit value. For example: 10)</h6>
+                      <input class="form-control" formControlName="rating" type="text">
+                      <span class="text-danger" *ngIf="productFormGroup.controls[i].get('rating').touched && productFormGroup.controls[i].get('rating').errors?.required">
+                        Rate is required! </span>
+                      <span class="text-danger" *ngIf="productFormGroup.controls[i].get('rating').errors?.pattern">
+                        Rate is invalid! </span>
+                    </div>
+                    <div class="form-group col-12">
+                      <label>Amount</label><h6>(Accept amount with decimal point number. For example: 100.00)</h6>
+                      <input class="form-control" formControlName="amount" type="text">
+                      <span class="text-danger" *ngIf="productFormGroup.controls[i].get('amount').touched && productFormGroup.controls[i].get('amount').errors?.required">
+                        Amount is required! </span>
+                      <span class="text-danger" *ngIf="productFormGroup.controls[i].get('amount').errors?.pattern">
+                        Amount is invalid! </span>
+                    </div>
+                    <div class="form-group col-12 text-right">
+                      <button class="btn btn-primary m-1" type="button" (click)="addProduct()"> Add Product </button>
+                      <button class="btn btn-danger" type="button" (click)="removeProduct(i)"> Remove </button>
+                    </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="card-body text-right">
+            <div class="col-12">
+              <button class="btn btn-success m-1" [disabled]="!productForm.valid" type="submit"> Save Product </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-6" *ngIf="productList?.length > 0 ">
+      <table class="table table-bordered">
+        <tr>
+          <th>ID</th>
+          <th>Product Name</th>
+          <th>Quantity</th>
+          <th>Rating</th>
+          <th>Amount</th>
+          <!-- <th width="220px">Action</th> -->
+        </tr>
+        <tr *ngFor="let item of productList">
+          <td>{{ item.id }}</td>
+          <td>{{ item.product_name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.rating }}</td>
+          <td>{{ item.amount }}</td>
+          <!-- <td>
+            <a href="#" [routerLink]="['/post/', post.id, 'view']" class="btn btn-info">View</a>
+            <a href="#" [routerLink]="['/post/', post.id, 'edit']" class="btn btn-primary">Edit</a>
+            <button type="button" (click)="deletePost(post.id)" class="btn btn-danger">Delete</button>
+          </td> -->
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

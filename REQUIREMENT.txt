@@ -1,0 +1,2 @@
+angular version == 8
+bootstrap (npm install bootstrap --save)
